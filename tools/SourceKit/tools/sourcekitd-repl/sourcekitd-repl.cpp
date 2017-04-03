@@ -11,7 +11,6 @@
 //===----------------------------------------------------------------------===//
 
 #include "sourcekitd/sourcekitd.h"
-
 #include "llvm/ADT/ArrayRef.h"
 #include "llvm/Support/CommandLine.h"
 #include "llvm/Support/raw_ostream.h"
@@ -23,12 +22,9 @@
 #include <unistd.h>
 #include <histedit.h>
 using namespace llvm;
-
-
 namespace {
 template<size_t N>
 class ConvertForWcharSize;
-
 template<>
 class ConvertForWcharSize<2> {
 public:
@@ -56,7 +52,6 @@ public:
                               flags);
   }
 };
-
 template<>
 class ConvertForWcharSize<4> {
 public:
@@ -71,7 +66,6 @@ public:
                               reinterpret_cast<UTF32*>(targetEnd),
                               flags);
   }
-
   static ConversionResult ConvertToUTF8(const wchar_t** sourceStart,
                                         const wchar_t* sourceEnd,
                                         char** targetStart,
@@ -84,7 +78,6 @@ public:
                               flags);
   }
 };
-
 using Convert = ConvertForWcharSize<sizeof(wchar_t)>;
 
 static void convertFromUTF8(llvm::StringRef utf8,
